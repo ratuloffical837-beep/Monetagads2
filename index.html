@@ -3,147 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Futuristic Neon Earning</title>
+    <title>Neon Earning App</title>
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <script src='//libtl.com/sdk.js' data-zone='10318378' data-sdk='show_10318378'></script>
-    <script type='text/javascript' src='//pl28272285.effectivegatecpm.com/79/ca/d6/79cad6252204e9c90dd50644a69e75f9.js'></script>
+    <script type='text/javascript' src='https://pl28272285.effectivegatecpm.com/79/ca/d6/79cad6252204e9c90dd50644a69e75f9.js'></script>
 
     <style>
         :root {
             --bg-deep: #0b1426;
             --neon-cyan: #00f0ff;
-            --neon-blue: #0072ff;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
+            --glass: rgba(255, 255, 255, 0.08);
         }
-
         body {
-            margin: 0; padding: 15px; background-color: var(--bg-deep);
-            color: var(--text-main); font-family: 'Segoe UI', sans-serif;
-            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            margin: 0; padding: 15px; background: var(--bg-deep); color: #fff;
+            font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center;
         }
-
-        /* Top Header */
-        .header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .social-btns { display: flex; gap: 10px; }
-        .social-btn {
-            width: 35px; height: 35px; border-radius: 8px; border: 1px solid var(--neon-cyan);
-            background: var(--glass-bg); color: white; display: grid; place-items: center; cursor: pointer;
+        .header { width: 100%; display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .social-btns { display: flex; gap: 8px; }
+        .s-btn { 
+            width: 35px; height: 35px; border: 1px solid var(--neon-cyan); 
+            border-radius: 8px; background: var(--glass); color: #fff; 
+            display: grid; place-items: center; cursor: pointer;
         }
-
-        /* The Neon Orb */
-        .orb-container { margin: 20px 0; }
+        .orb-container { margin: 20px 0; position: relative; }
         .orb {
-            width: 160px; height: 160px; border-radius: 50%;
+            width: 150px; height: 150px; border-radius: 50%;
             border: 4px solid var(--neon-cyan);
             box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 15px var(--neon-cyan);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 70%);
         }
-        .balance-val { font-size: 38px; font-weight: bold; text-shadow: 0 0 10px var(--neon-cyan); }
-        .balance-label { font-size: 10px; opacity: 0.7; letter-spacing: 1px; }
-
-        /* Small Balance Box */
-        .balance-box {
-            padding: 8px 15px; background: rgba(0, 240, 255, 0.1); border-radius: 20px;
-            font-size: 13px; border: 1px solid var(--neon-cyan); margin-bottom: 20px;
-        }
-
-        /* 4-Box Grid Stats */
-        .stats-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 25px;
-        }
-        .stat-box {
-            background: var(--glass-bg); padding: 12px; border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1); text-align: center;
-        }
-        .stat-box span { font-size: 11px; opacity: 0.6; display: block; }
-        .stat-box strong { font-size: 18px; color: var(--neon-cyan); }
-
-        /* Main Buttons Layout */
+        .balance-val { font-size: 35px; font-weight: bold; text-shadow: 0 0 10px var(--neon-cyan); }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: 20px 0; }
+        .stat-box { background: var(--glass); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .btn {
-            padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
-            background: var(--glass-bg); color: white; font-weight: bold; cursor: pointer;
-            transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 5px;
+            padding: 15px; border-radius: 12px; border: 1px solid var(--neon-cyan);
+            background: var(--glass); color: #fff; font-weight: bold; cursor: pointer;
         }
-        .btn:active { transform: scale(0.95); }
-        .btn.primary { background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue)); color: #000; }
+        .btn.primary { background: linear-gradient(135deg, var(--neon-cyan), #0072ff); color: #000; }
         .btn-disabled { filter: grayscale(1); opacity: 0.5; pointer-events: none; }
-        .btn-exit { margin-top: 15px; width: 100%; background: #ff3b30; border: none; }
-
-        /* Marquee */
-        .notice { width: 100%; overflow: hidden; white-space: nowrap; font-size: 12px; color: yellow; margin-bottom: 10px; }
-
-        /* Toast */
-        #toast {
-            position: fixed; bottom: 20px; background: rgba(0,0,0,0.9); color: white;
-            padding: 10px 20px; border-radius: 20px; font-size: 13px; visibility: hidden; z-index: 1000;
-        }
+        .notice { width: 100%; color: yellow; font-size: 12px; margin-bottom: 10px; }
+        #toast { position: fixed; bottom: 20px; background: #000; padding: 10px 20px; border-radius: 20px; visibility: hidden; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <div class="social-btns">
-            <div class="social-btn" onclick="window.open('https://youtube.com/@alex-42-41')"><i class="fab fa-youtube"></i></div>
-            <div class="social-btn" onclick="window.open('https://facebook.com/share/1UQCaxE29T/')"><i class="fab fa-facebook"></i></div>
-            <div class="social-btn" onclick="window.open('https://t.me/ratulhossain56')"><i class="fab fa-telegram"></i></div>
-            <div class="social-btn" onclick="copyLink('https://otieu.com/4/10315373', 'Monetag')"><i class="fas fa-link"></i></div>
-            <div class="social-btn" onclick="copyLink('https://www.effectivegatecpm.com/e0xpfuhe?key=fb81fa455f0ff2d6a8fa09ce5d18dd57', 'Adstar')"><i class="fas fa-copy"></i></div>
+            <div class="s-btn" onclick="window.open('https://youtube.com/@alex-42-41')"><i class="fab fa-youtube"></i></div>
+            <div class="s-btn" onclick="window.open('https://facebook.com/share/1UQCaxE29T/')"><i class="fab fa-facebook"></i></div>
+            <div class="s-btn" onclick="window.open('https://t.me/ratulhossain56')"><i class="fab fa-telegram"></i></div>
+            <div class="s-btn" onclick="copyLink('https://otieu.com/4/10315373', 'Monetag')"><i class="fas fa-link"></i></div>
+            <div class="s-btn" onclick="copyLink('https://www.effectivegatecpm.com/e0xpfuhe?key=fb81fa455f0ff2d6a8fa09ce5d18dd57', 'Adstar')"><i class="fas fa-copy"></i></div>
         </div>
-        <div style="text-align: right;">
-            <div style="font-size: 12px;">Hello, <span id="uName" style="color:var(--neon-cyan)">User</span></div>
-            <div style="font-size: 10px; opacity: 0.5;">● Connected</div>
+        <div style="text-align: right; font-size: 12px;">
+            Hello, <span id="uName" style="color:var(--neon-cyan)">User</span><br>
+            <span style="opacity:0.5">● Connected</span>
         </div>
     </div>
 
-    <div class="notice"><marquee>🔔 ১০ জনকে রেফার করা জরুরি। ৬০০ পয়েন্ট হলেই উইথড্র করতে পারবেন। Monetag Ad দেখে টাকা আয় করুন!</marquee></div>
+    <div class="notice"><marquee>🔔 ৩ জনকে রেফার করলেই উইথড্র দিতে পারবেন। প্রতিদিন ২০টি Monetag এবং ১০টি Adstar টাস্ক পাবেন।</marquee></div>
 
     <div class="orb-container">
         <div class="orb">
-            <span class="balance-val" id="coinsDisplay">0</span>
-            <span class="balance-label">TOTAL POINTS</span>
+            <span class="balance-val" id="pointsDisplay">0</span>
+            <span style="font-size:10px">POINTS</span>
         </div>
     </div>
 
-    <div class="balance-box">Confirmed Balance: <span id="validCoinsDisplay">0</span></div>
-
     <div class="stats-grid">
-        <div class="stat-box"><span>Ads Today (M)</span><strong id="mAdsToday">0/20</strong></div>
-        <div class="stat-box"><span>Adstar Today</span><strong id="aAdsToday">0/10</strong></div>
-        <div class="stat-box"><span>Total Ads</span><strong id="totalAds">0</strong></div>
-        <div class="stat-box"><span>Referrals</span><strong id="refCount">0</strong></div>
+        <div class="stat-box"><small>Monetag Ads</small><br><strong id="mCount">0/20</strong></div>
+        <div class="stat-box"><small>Adstar Today</small><br><strong id="aCount">0/10</strong></div>
+        <div class="stat-box"><small>Total Ads</small><br><strong id="totalAds">0</strong></div>
+        <div class="stat-box"><small>Referrals</small><br><strong id="refCount">0</strong></div>
     </div>
 
     <div class="btn-grid">
-        <button class="btn primary" id="monetagBtn" onclick="watchMonetagAd()">
-            <i class="fas fa-play"></i><span id="mText">WATCH AD</span>
-        </button>
-        <button class="btn" id="adstarBtn" onclick="watchAdstarAd()">
-            <i class="fas fa-star"></i><span id="aText">ADSTAR TASK</span>
-        </button>
-        <button class="btn" onclick="openRefer()">
-            <i class="fas fa-users"></i>REFER EARN
-        </button>
-        <button class="btn" onclick="openWithdraw()">
-            <i class="fas fa-wallet"></i>WITHDRAW
-        </button>
+        <button class="btn primary" id="mBtn" onclick="watchMonetag()"><i class="fas fa-play"></i> <span id="mText">WATCH AD</span></button>
+        <button class="btn" id="aBtn" onclick="watchAdstar()"><i class="fas fa-star"></i> <span id="aText">ADSTAR TASK</span></button>
+        <button class="btn" onclick="doRefer()"><i class="fas fa-users"></i> REFER EARN</button>
+        <button class="btn" onclick="doWithdraw()"><i class="fas fa-wallet"></i> WITHDRAW</button>
     </div>
 
-    <button class="btn btn-exit" onclick="Telegram.WebApp.close()">EXIT APP</button>
+    <button class="btn" style="width:100%; margin-top:15px; background:#ff3b30; border:none;" onclick="Telegram.WebApp.close()">EXIT APP</button>
 
     <div id="toast">Notification</div>
 
     <script>
-        const BACKEND_URL = "https://monetagads4241r.onrender.com";
-        const ADSTAR_LINK = "https://www.effectivegatecpm.com/e0xpfuhe?key=fb81fa455f0ff2d6a8fa09ce5d18dd57";
-        
+        const BACKEND = "https://monetagads4241r.onrender.com";
+        const ADSTAR_URL = "https://www.effectivegatecpm.com/e0xpfuhe?key=fb81fa455f0ff2d6a8fa09ce5d18dd57";
         const tg = window.Telegram.WebApp;
         tg.expand();
 
@@ -158,99 +111,93 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        let userData = { id: tg.initDataUnsafe?.user?.id || "test_user", name: tg.initDataUnsafe?.user?.first_name || "Guest" };
-        document.getElementById('uName').innerText = userData.name.toUpperCase();
+        let uid = String(tg.initDataUnsafe?.user?.id || "test_user");
+        document.getElementById('uName').innerText = (tg.initDataUnsafe?.user?.first_name || "Guest").toUpperCase();
 
-        // Realtime Data Sync
-        db.collection('users').doc(String(userData.id)).onSnapshot(doc => {
-            if(doc.exists) {
+        db.collection('users').doc(uid).onSnapshot(doc => {
+            if(doc.exists){
                 const d = doc.data();
-                document.getElementById('coinsDisplay').innerText = d.coins || 0;
-                document.getElementById('validCoinsDisplay').innerText = d.validCoins || 0;
+                document.getElementById('pointsDisplay').innerText = d.coins || 0;
                 document.getElementById('refCount').innerText = d.referrals || 0;
                 document.getElementById('totalAds').innerText = d.totalAdsWatched || 0;
                 
-                const today = new Date().toISOString().slice(0, 10);
-                const mAds = d.lastAdDate === today ? (d.adsToday || 0) : 0;
-                const aAds = d.lastAdstarDate === today ? (d.adstarToday || 0) : 0;
+                const today = new Date().toISOString().slice(0,10);
+                const mC = d.lastAdDate === today ? (d.adsToday || 0) : 0;
+                const aC = d.lastAdstarDate === today ? (d.adstarToday || 0) : 0;
                 
-                document.getElementById('mAdsToday').innerText = `${mAds}/20`;
-                document.getElementById('aAdsToday').innerText = `${aAds}/10`;
+                document.getElementById('mCount').innerText = `${mC}/20`;
+                document.getElementById('aCount').innerText = `${aC}/10`;
                 
-                updateCooldowns(d.lastAdTime, d.lastAdstarTime, mAds, aAds);
+                handleTimers(d.lastAdTime, d.lastAdstarTime, mC, aC);
             }
         });
 
-        function updateCooldowns(mLast, aLast, mCount, aCount) {
+        function handleTimers(mLast, aLast, mC, aC) {
             const now = Date.now();
+            // Monetag 5 min (300s)
+            const mDiff = mLast ? (now - mLast.toDate().getTime())/1000 : 999;
+            if(mC >= 20) setBtn('mBtn', 'mText', 'LIMIT REACHED', true);
+            else if(mDiff < 300) startCooldown('mBtn', 'mText', 300 - mDiff, 'WATCH AD');
             
-            // Monetag Cooldown (300s = 5 min)
-            const mBtn = document.getElementById('monetagBtn');
-            const mDiff = mLast ? (now - mLast.toDate().getTime()) / 1000 : 999;
-            if (mCount >= 20) { mBtn.classList.add('btn-disabled'); document.getElementById('mText').innerText = "LIMIT REACHED"; }
-            else if (mDiff < 300) startTimer(mBtn, 'mText', 300 - mDiff, "WATCH AD");
-
-            // Adstar Cooldown (1200s = 20 min)
-            const aBtn = document.getElementById('adstarBtn');
-            const aDiff = aLast ? (now - aLast.toDate().getTime()) / 1000 : 999;
-            if (aCount >= 10) { aBtn.classList.add('btn-disabled'); document.getElementById('aText').innerText = "LIMIT REACHED"; }
-            else if (aDiff < 1200) startTimer(aBtn, 'aText', 1200 - aDiff, "ADSTAR TASK");
+            // Adstar 20 min (1200s)
+            const aDiff = aLast ? (now - aLast.toDate().getTime())/1000 : 999;
+            if(aC >= 10) setBtn('aBtn', 'aText', 'LIMIT REACHED', true);
+            else if(aDiff < 1200) startCooldown('aBtn', 'aText', 1200 - aDiff, 'ADSTAR TASK');
         }
 
-        function startTimer(btn, textId, sec, originalText) {
-            btn.classList.add('btn-disabled');
-            let remaining = Math.floor(sec);
-            const interval = setInterval(() => {
-                let m = Math.floor(remaining / 60);
-                let s = remaining % 60;
-                document.getElementById(textId).innerText = `WAIT ${m}:${s < 10 ? '0' : ''}${s}`;
-                remaining--;
-                if(remaining < 0) { clearInterval(interval); document.getElementById(textId).innerText = originalText; btn.classList.remove('btn-disabled'); }
+        function startCooldown(id, textId, sec, orig) {
+            const b = document.getElementById(id);
+            b.classList.add('btn-disabled');
+            let s = Math.floor(sec);
+            const timer = setInterval(() => {
+                document.getElementById(textId).innerText = `WAIT ${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+                if(s-- <= 0) { clearInterval(timer); b.classList.remove('btn-disabled'); document.getElementById(textId).innerText = orig; }
             }, 1000);
         }
 
-        function watchMonetagAd() {
-            if (typeof show_10318378 === 'function') {
-                show_10318378({ ymid: userData.id }).then(() => {
-                    fetch(`${BACKEND_URL}/api/claim-reward`, {
-                        method: 'POST',
-                        headers: { 'x-telegram-init-data': tg.initData }
-                    });
-                    showToast("Monetag Ad Success! 5 min wait starts.");
+        function setBtn(id, textId, msg, dis) {
+            document.getElementById(id).classList.toggle('btn-disabled', dis);
+            document.getElementById(textId).innerText = msg;
+        }
+
+        function watchMonetag() {
+            if(typeof show_10318378 === 'function'){
+                show_10318378({ymid: uid}).then(() => {
+                    fetch(`${BACKEND}/api/claim-reward`, {method:'POST', headers:{'x-telegram-init-data': tg.initData}});
+                    showToast("Ad Success! Wait 5 min.");
                 });
             }
         }
 
-        function watchAdstarAd() {
-            window.open(ADSTAR_LINK, '_blank');
-            // Notify server to count task (no points)
-            fetch(`${BACKEND_URL}/api/claim-adstar`, {
-                method: 'POST',
-                headers: { 'x-telegram-init-data': tg.initData }
-            });
-            showToast("Adstar Task Counted! 20 min wait starts.");
+        function watchAdstar() {
+            window.open(ADSTAR_URL, '_blank');
+            fetch(`${BACKEND}/api/claim-adstar`, {method:'POST', headers:{'x-telegram-init-data': tg.initData}});
+            showToast("Task Done! Wait 20 min.");
         }
 
-        function copyLink(link, name) {
-            navigator.clipboard.writeText(link);
-            showToast(`${name} Link Copied!`);
-        }
+        function copyLink(l, n) { navigator.clipboard.writeText(l); showToast(n + " Copied!"); }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.innerText = msg; t.style.visibility = 'visible';
-            setTimeout(() => t.style.visibility = 'hidden', 3000);
-        }
-
-        function openWithdraw() { showToast("Click Orb to Withdraw (Min 600)"); }
-        function openRefer() { 
-            const link = `https://t.me/realldoler87ok_bot?start=${userData.id}`;
+        function doRefer() {
+            const link = `https://t.me/realldoler87ok_bot?start=${uid}`;
             navigator.clipboard.writeText(link);
             showToast("Referral Link Copied!");
         }
 
-        // Initialize User on Server
-        fetch(`${BACKEND_URL}/api/sync`, { method: 'POST', headers: { 'x-telegram-init-data': tg.initData } });
+        function doWithdraw() {
+            db.collection('users').doc(uid).get().then(doc => {
+                const d = doc.data();
+                if((d.coins || 0) < 600) showToast("Need 600 Points");
+                else if((d.referrals || 0) < 3) showToast("Need 3 Referrals");
+                else showToast("Contact Admin for Payment");
+            });
+        }
+
+        function showToast(m) { 
+            const t = document.getElementById('toast'); t.innerText = m; 
+            t.style.visibility = 'visible'; setTimeout(() => t.style.visibility = 'hidden', 3000); 
+        }
+
+        fetch(`${BACKEND}/api/sync`, {method:'POST', headers:{'x-telegram-init-data': tg.initData}});
     </script>
 </body>
     </html>
